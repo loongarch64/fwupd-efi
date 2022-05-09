@@ -36,7 +36,7 @@ def _run_objcopy(args):
 
     # aarch64 and arm32 don't have an EFI capable objcopy
     # Use 'binary' instead, and add required symbols manually
-    if args.arch in ["aarch64", "arm"]:
+    if args.arch in ["aarch64", "arm", "loongarch64"]:
         argv.extend(["-O", "binary"])
     elif args.os == "freebsd":
         # `--target` option is missing and --input-target doesn't recognize
