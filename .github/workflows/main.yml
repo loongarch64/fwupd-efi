@@ -1,9 +1,9 @@
 name: Continuous Integration
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -29,13 +29,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [fedora, debian-x86_64, arch, debian-i386]
+        os: [fedora, debian-x86_64, arch, debian-i386, debian-loong64]
     steps:
       - uses: actions/checkout@v5
       - name: Docker login
         run: docker login docker.pkg.github.com -u $GITHUB_ACTOR -p $GITHUB_TOKEN
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
       - name: Build in container
         env:
           CI_NETWORK: true
